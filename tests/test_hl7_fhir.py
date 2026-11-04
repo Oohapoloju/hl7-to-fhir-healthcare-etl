@@ -65,8 +65,8 @@ def test_bundle_contains_patient_and_encounter():
 
 
 def test_bundle_without_pv1_has_only_the_patient():
-    message = parse_message(adt_message(pv1="")) 
-    assert len(to_bundle(message)["entry"]) == 2 or len(to_bundle(message)["entry"]) == 1
+    bundle = to_bundle(parse_message(adt_message(pv1="")))
+    assert [entry["resource"]["resourceType"] for entry in bundle["entry"]] == ["Patient"]
 
 
 def test_missing_pid_is_a_mapping_error():
